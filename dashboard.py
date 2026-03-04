@@ -880,17 +880,6 @@ def render_overview(df_filtered, df_full, selected_channels, proj_months):
         fcm2.update_yaxes(title_text="$")
         st.plotly_chart(fcm2,use_container_width=True)
 
-    # Data table
-    st.markdown('<div class="section-header">Detailed Data Table</div>', unsafe_allow_html=True)
-    dtbl = df_filtered[["month_label","total_volume_ghs","total_volume_usd",
-                         "total_transaction_count","total_fees_ghs","total_fees_usd"]].copy()
-    dtbl.columns = ["Month","GHS Volume (9 channels)","USD Volume (On-chain)","Total Txns","GHS Fees","USD Fees"]
-    dtbl["GHS Volume (9 channels)"] = dtbl["GHS Volume (9 channels)"].apply(lambda x: f"GH₵{x:,.2f}")
-    dtbl["USD Volume (On-chain)"] = dtbl["USD Volume (On-chain)"].apply(lambda x: f"${x:,.2f}")
-    dtbl["Total Txns"] = dtbl["Total Txns"].apply(lambda x: f"{int(x):,}")
-    dtbl["GHS Fees"] = dtbl["GHS Fees"].apply(lambda x: f"GH₵{x:,.2f}")
-    dtbl["USD Fees"] = dtbl["USD Fees"].apply(lambda x: f"${x:,.2f}")
-    st.dataframe(dtbl, use_container_width=True, hide_index=True)
 
 
 # ============================================================
