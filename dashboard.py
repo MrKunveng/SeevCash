@@ -208,18 +208,18 @@ def load_data():
 
 def fmt_currency(val, symbol="$"):
     if abs(val) >= 1_000_000:
-        return f"{symbol}{val/1_000_000:,.1f}M"
+        return f"{symbol}{val/1_000_000:,.2f}M"
     if abs(val) >= 1_000:
-        return f"{symbol}{val/1_000:,.1f}K"
-    return f"{symbol}{val:,.0f}"
+        return f"{symbol}{val/1_000:,.2f}K"
+    return f"{symbol}{val:,.2f}"
 
 
 def fmt_number(val):
     if abs(val) >= 1_000_000:
-        return f"{val/1_000_000:,.1f}M"
+        return f"{val/1_000_000:,.2f}M"
     if abs(val) >= 1_000:
-        return f"{val/1_000:,.1f}K"
-    return f"{val:,.0f}"
+        return f"{val/1_000:,.2f}K"
+    return f"{val:,.2f}"
 
 
 def pct_change(new, old):
@@ -256,7 +256,7 @@ def add_projections(df, col, months_ahead=6):
 def delta_html(val, suffix="%"):
     cls = "delta-positive" if val >= 0 else "delta-negative"
     arr = "▲" if val >= 0 else "▼"
-    return f'<span class="metric-delta {cls}">{arr} {abs(val):.1f}{suffix}</span>'
+    return f'<span class="metric-delta {cls}">{arr} {abs(val):.2f}{suffix}</span>'
 
 
 # ============================================================
@@ -601,19 +601,19 @@ def render_overview(df_filtered, df_full, selected_channels, proj_months):
         d_arr = "▲" if ghs_delta >= 0 else "▼"
         st.markdown(f"""<div class="metric-card"><div class="metric-label">GHS Volume (9 channels)</div>
         <div class="metric-value-ghs">{fmt_currency(latest['total_volume_ghs'], 'GH₵')}</div>
-        <div class="metric-delta {d_cls}">{d_arr} {abs(ghs_delta):.1f}% MoM</div></div>""", unsafe_allow_html=True)
+        <div class="metric-delta {d_cls}">{d_arr} {abs(ghs_delta):.2f}% MoM</div></div>""", unsafe_allow_html=True)
     with kpi2:
         d_cls = "delta-positive" if usd_delta >= 0 else "delta-negative"
         d_arr = "▲" if usd_delta >= 0 else "▼"
         st.markdown(f"""<div class="metric-card"><div class="metric-label">USD Volume (On-chain)</div>
         <div class="metric-value">{fmt_currency(latest['total_volume_usd'])}</div>
-        <div class="metric-delta {d_cls}">{d_arr} {abs(usd_delta):.1f}% MoM</div></div>""", unsafe_allow_html=True)
+        <div class="metric-delta {d_cls}">{d_arr} {abs(usd_delta):.2f}% MoM</div></div>""", unsafe_allow_html=True)
     with kpi3:
         d_cls = "delta-positive" if cnt_delta >= 0 else "delta-negative"
         d_arr = "▲" if cnt_delta >= 0 else "▼"
         st.markdown(f"""<div class="metric-card"><div class="metric-label">Monthly Transactions</div>
         <div class="metric-value">{fmt_number(latest['total_transaction_count'])}</div>
-        <div class="metric-delta {d_cls}">{d_arr} {abs(cnt_delta):.1f}% MoM</div></div>""", unsafe_allow_html=True)
+        <div class="metric-delta {d_cls}">{d_arr} {abs(cnt_delta):.2f}% MoM</div></div>""", unsafe_allow_html=True)
     with kpi4:
         cum_ghs = df_filtered["total_volume_ghs"].sum()
         st.markdown(f"""<div class="metric-card"><div class="metric-label">Cumulative GHS</div>
